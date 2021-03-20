@@ -1,3 +1,19 @@
-# Docker MEAN Stack
+# MEAN Stack with Docker Compose and Caddy Server
 
-To run: `docker-compose -f docker-compose.yml up --build -d`
+## Dev build
+
+```bash
+make build-dev
+make run-dev
+```
+
+## Production build
+
+```bash
+make build-production
+make run-production
+```
+
+## Stop
+
+`make stop`
