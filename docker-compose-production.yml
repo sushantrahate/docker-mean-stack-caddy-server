@@ -1,0 +1,42 @@
+version: "3"
+services:
+  frontend:
+    image: angular-app-production:${ENV}
+    restart: unless-stopped
+    ports: 
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      - mean-app
+  api-server:
+    image: api-server
+    restart: unless-stopped
+    env_file: 
+      - .env
+    ports:
+      - "5000:5000"
+    networks:
+      - mean-app
+  mongo:
+    container_name: mongodb
+    image: mongo:4.4-bionic
+    ports:
+      - "27017:27017"
+    networks:
+      - mean-app
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+networks:
+  mean-app:
+    driver: bridge
+volumes:
+  mongo-data:
+    driver: local
+  caddy-data:
+    driver: local
+  caddy-config:
+    driver: local

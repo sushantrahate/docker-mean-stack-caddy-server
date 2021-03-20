@@ -1,0 +1,45 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: "frontend"
+      dockerfile: "Dockerfile"
+    ports:
+      - '4200:4200'
+      # - '80:4200'
+    networks:
+      - mean-app
+    # volumes:
+    #   - ./frontend/:/usr/src/app
+    #   - /usr/src/app/node_modules
+  server:
+    env_file:
+      - .env
+    build:
+      context: "server"
+      dockerfile: "Dockerfile"
+    ports:
+      - '5000:5000'
+    networks:
+      - mean-app
+    depends_on: 
+      - mongo
+    # volumes:
+    #   - ./server/:/usr/src/app
+    #   - /usr/src/app/node_modules
+  mongo:
+    image: mongo:4.4-bionic
+    ports:
+      - "27017:27017"
+    networks:
+      - mean-app
+    volumes:
+      - mongo-data:/data/db
+    restart: on-failure
+networks:
+  mean-app:
+    driver: bridge
+volumes:
+  mongo-data:
+    driver: local
+
