@@ -10,5 +10,12 @@ build-local:
 run-local:
 	ENV=local docker-compose -f docker-compose-production.yml up --build -d
 
+build-production:
+	cd frontend && $(MAKE) build-production
+	cd server && $(MAKE) build	
+
+run-production:
+	ENV=production docker-compose -f docker-compose-production.yml up --build -d
+	
 log-all:
-	docker-compose -f docker-compose-production.yml logs -f --tail=0
+	docker-compose -f docker-compose-production.yml logs -f

@@ -1,5 +1,5 @@
-website.com:443 {
-  tls yourname@gmail.com
+<Domain>:443 {
+  tls <EmailAddress>
   root * /srv
   route {
     reverse_proxy /api* api-server:5000
